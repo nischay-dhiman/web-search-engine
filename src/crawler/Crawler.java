@@ -4,13 +4,14 @@ import org.jsoup.Connection;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
+import org.jsoup.select.Elements;
 
 import java.io.IOException;
 import java.util.ArrayList;
 
 public class Crawler {
-    public static final String DOMAIN = "https://edition.cnn.com/";
-    private static final Integer MAX_LEVEL = 2;
+    public static final String DOMAIN = "https://windsorstar.com";
+    private static final Integer MAX_LEVEL = 5;
 
     private static Document download(String url, ArrayList<String> visited) {
         try {
@@ -28,10 +29,10 @@ public class Crawler {
             }
 
             visited.add(url);
-            System.out.println("Visited: " + url);
+             System.out.println("Visited: " + url);
 
             String filename = Slugify.Make(document.title()) + ".html";
-            File.Write("src/html/" + filename, document.outerHtml());
+             File.Write("src/html/" + filename, document.outerHtml());
 
             return document;
         } catch (IOException e) {
@@ -45,9 +46,12 @@ public class Crawler {
         Document doc = download(url, visited);
         if (doc == null) return;
 
-        for (Element link : doc.select("a[href]")) {
+        Elements links = doc.select("a[href]");
+        for (Element link : links) {
+            String href = link.attr("href");
+            if (href.startsWith("#") || href.startsWith("?") || href.endsWith("/") || href.length() < 50) continue;
             String next_link = link.absUrl("href");
-            if (!visited.contains(next_link) && next_link.contains(DOMAIN)) {
+            if (!visited.contains(next_link) && next_link.startsWith(DOMAIN)) {
                 crawl(level++, next_link, visited);
             }
         }

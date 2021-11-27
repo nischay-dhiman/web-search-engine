@@ -49,7 +49,7 @@ public class HTMLToTextConverter {
         String cleanText = Jsoup.clean(parsedText, Safelist.simpleText());
 
         // Write text into txt files
-        String outputFilePath = TEXT_PATH + filename.replace(".htm", ".txt");
+        String outputFilePath = TEXT_PATH + filename.replace(".html", ".txt");
         BufferedWriter bw = new BufferedWriter(new FileWriter(outputFilePath));
         bw.write(cleanText);
         bw.close();
