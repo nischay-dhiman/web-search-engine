@@ -10,8 +10,9 @@ import java.io.IOException;
 import java.util.ArrayList;
 
 public class Crawler {
-    public static final String DOMAIN = "https://windsorstar.com";
     private static final Integer MAX_LEVEL = 5;
+    public static final String HTML_PATH = "src/html/";
+    public static final String DOMAIN = "https://windsorstar.com";
 
     private static Document download(String url, ArrayList<String> visited) {
         try {
@@ -32,7 +33,7 @@ public class Crawler {
              System.out.println("Visited: " + url);
 
             String filename = Slugify.Make(document.title()) + ".html";
-             File.Write("src/html/" + filename, document.outerHtml());
+             File.Write(HTML_PATH + filename, document.outerHtml());
 
             return document;
         } catch (IOException e) {
