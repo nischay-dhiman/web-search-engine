@@ -1,8 +1,10 @@
 package websites_data;
 
 import java.io.File;
+import java.io.FileOutputStream;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.io.ObjectOutputStream;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -16,7 +18,10 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
-import org.json.JSONObject;
+//import org.json.JSONObject;
+
+import org.json.simple.JSONArray;
+import org.json.simple.JSONObject;
 
 
 
@@ -34,7 +39,7 @@ public class UrlWordsData_InvertedIndex {
             public int compare(HashMap.Entry<String, Integer> o1,
             		HashMap.Entry<String, Integer> o2)
             {
-                return (o1.getValue()).compareTo(o2.getValue());
+                return (o2.getValue()).compareTo(o1.getValue());
             }
         });
          
@@ -105,7 +110,7 @@ public class UrlWordsData_InvertedIndex {
 						
 						fileWords[i] = fileWords[i].replaceAll("[^a-zA-Z]", "");
 						
-						if(fileWords[i].length() > 10) {
+						if(fileWords[i].length() > 10 || fileWords[i].length() < 2) {
 							continue;
 						}
 						String str = fileWords[i].toLowerCase();
@@ -161,11 +166,28 @@ public class UrlWordsData_InvertedIndex {
 			System.out.println(hm1);
 		}
 		 
-		JSONObject json = new JSONObject(tempHashMap);
+//		JSONObject json = new JSONObject(tempHashMap);
 		
-		FileWriter file = new FileWriter("G:\\UniversityofWindsor\\Semester1\\COMP-8547_AdvancedComputingConcepts\\crunchify.txt");
-        file.write(json.toString());
+		FileOutputStream fileOut = new FileOutputStream("crunchify.ser");
+		ObjectOutputStream out = new ObjectOutputStream(fileOut);
+		out.writeObject(tempHashMap);
+		out.close();
+		fileOut.close();
+		
+//		FileWriter file = new FileWriter("crunchify.json");
+//        file.write(json.toJSONString());
 		
 	}
 
 }
+
+
+
+
+
+
+
+
+
+
+
