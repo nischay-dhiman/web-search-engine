@@ -25,13 +25,6 @@ import java.util.stream.Collectors;
 
 
 
-
-import org.json.simple.JSONArray;
-import org.json.simple.JSONObject;
-import org.json.simple.parser.JSONParser;
-import org.json.simple.parser.ParseException;
-
-
 public class Autocorrect {
 
 	public static int editDistance(String word1, String word2) {

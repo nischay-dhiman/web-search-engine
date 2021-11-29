@@ -24,9 +24,7 @@ import user_input.UserInput;
 import websites_data.UrlWordsData;
 
 public class InitiateSearch {
-	
 	public static HashMap getDictionary() throws IOException {
-		
 		FileInputStream fileIn = new FileInputStream("crunchify.ser");
 		HashMap<String, HashMap<String, Integer>> dictionary = new HashMap();
         try (ObjectInputStream in = new ObjectInputStream(fileIn)) {
@@ -37,16 +35,10 @@ public class InitiateSearch {
 		}
         return dictionary;
 	}
-	
-	
+
 	public static void main(String[] args) throws IOException {
-		
 		HashMap<String, HashMap<String, Integer>> wordHashTable = getDictionary();
-
-		String searchKey = UserInput.userInput(wordHashTable); 
-
+		String searchKey = UserInput.userInput(wordHashTable);
 		OutResults.print_results(wordHashTable, searchKey);
-		
 	}
-
 }
