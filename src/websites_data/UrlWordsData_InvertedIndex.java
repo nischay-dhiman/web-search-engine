@@ -121,23 +121,18 @@ public class UrlWordsData_InvertedIndex {
     }
 
     public static void main(String args[]) throws IOException {
-        HashMap<String, HashMap<String, Integer>> tempHashMap = GetUrlWordsData();
-        for (Map.Entry<String, HashMap<String, Integer>> en : tempHashMap.entrySet()) {
+        HashMap<String, HashMap<String, Integer>> finalHashMap = GetUrlWordsData();
+        for (Map.Entry<String, HashMap<String, Integer>> en : finalHashMap.entrySet()) {
             HashMap<String, Integer> hm = en.getValue();
             HashMap<String, Integer> hm1 = new UrlWordsData_InvertedIndex().sortHashMapByValues(hm);
-            tempHashMap.put(en.getKey(), hm1);
+            finalHashMap.put(en.getKey(), hm1);
         }
 
-//		JSONObject json = new JSONObject(tempHashMap);
-
-        FileOutputStream fileOut = new FileOutputStream("crunchify.ser");
+        FileOutputStream fileOut = new FileOutputStream("Dictionary.ser");
         ObjectOutputStream out = new ObjectOutputStream(fileOut);
-        out.writeObject(tempHashMap);
+        out.writeObject(finalHashMap);
         out.close();
         fileOut.close();
-
-//		FileWriter file = new FileWriter("crunchify.json");
-//        file.write(json.toJSONString());
     }
 
 }
